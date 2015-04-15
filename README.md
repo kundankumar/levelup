@@ -39,8 +39,8 @@ api_key = '23eef8c2895ce66eb4500bb5e324b200f5339e6fe6d8665f6de0205f43f3b563'
 client_secret = '4d71e958b9fb6a62af624390c4ef394df15d168ea12b3b12735643ff0694520f'
 
 auth_response = api.access_tokens.create_for_app(
-  api_key: api_key,
-  client_secret: client_secret)
+  :api_key => api_key,
+  :client_secret => client_secret)
 
 api.app_access_token = auth_response.token
 ```
@@ -54,7 +54,7 @@ username = 'sandboxdevexample@thelevelup.com'
 password = 'fod2yau4flu6vok6'
 
 merchant_token = api.access_tokens.create_for_merchant(
-  api_key: api_key, username: username, password: password)
+  :api_key => api_key, :username => username, :password => password)
 ```
 
 ### Do for each merchant location
@@ -62,6 +62,8 @@ merchant_token = api.access_tokens.create_for_merchant(
 - Prompt merchant to map LevelUp locations to each of their online ordering locations
 
 ```ruby
+merchant_id = merchant_token.merchant_id
+merchant_access_token = merchant_token.token
 locations_response = api.merchants(merchant_id).locations.list(merchant_access_token)
 
 # For testing purposes, we'll use the first location
@@ -80,8 +82,8 @@ For more information on available permissions, see the
 
 ```ruby
 api.apps.permissions_requests.create(
-  email: 'user@email.com',
-  permission_keynames: ['create_orders', 'read_qr_code'])
+  :email => 'user@email.com',
+  :permission_keynames => ['create_orders', 'read_qr_code'])
 # wait for the user to approve the request. you will receive a user
 # access token in the same manner as above.
 ```
@@ -112,13 +114,13 @@ tax_amount_due = 10 # Total tax amount due on check (in cents)
 identifier_from_merchant = '01234' # Unique check identifier in your platform (ie, check ID)
 check_items_array = [ # Array of all items on the check
     {
-      charged_price: 350,
-      description: 'Non-poisonous, supplies vital nutrients',
-      name: 'Food',
-      quantity: 1,
-      sku: '123abc',
-      category: 'Edible Things',
-      standard_price: 350
+      :charged_price => 350,
+      :description => 'Non-poisonous, supplies vital nutrients',
+      :name => 'Food',
+      :quantity => 1,
+      :sku => '123abc',
+      :category => 'Edible Things',
+      :standard_price => 350
     }
     # more items can go here
   ]
@@ -126,29 +128,29 @@ check_items_array = [ # Array of all items on the check
 # Determine the amount of discount to apply to the check
 
 credit_to_apply = Levelup::Utils::PaymentCalculator.levelup_discount_to_apply(
-  check_total_due_including_tax: check_total_due_including_tax,
-  exempted_item_total: exempted_item_total,
-  merchant_funded_credit_available: discount_response.discount_amount,  
-  payment_amount_requested: spend_amount_requested,
-  tax_amount_due: tax_amount_due,
+  :check_total_due_including_tax => check_total_due_including_tax,
+  :exempted_item_total => exempted_item_total,
+  :merchant_funded_credit_available => discount_response.discount_amount,
+  :payment_amount_requested => spend_amount_requested,
+  :tax_amount_due => tax_amount_due
 )
 
 # Apply the discount to the check
 
 # Create a new order request
 order_response = api.orders.create(
-  identifier_from_merchant: identifier_from_merchant,
-  location_id: location_id,
-  spend_amount: spend_amount_requested,
-  items: check_items_array,
-  merchant_access_token: merchant_access_token,
-  user_access_token: qr_code)
+  :identifier_from_merchant => identifier_from_merchant,
+  :location_id => location_id,
+  :spend_amount => spend_amount_requested,
+  :items => check_items_array,
+  :merchant_access_token => merchant_access_token,
+  :user_access_token => qr_code)
 
 calculator = Levelup::Utils::PaymentCalculator.new(
-  discount_applied: credit_to_apply,
-  gift_card_credit_available: discount_response.gift_card_amount,
-  spend_amount_returned_from_levelup: order_response.spend_amount,
-  tip_returned_from_levelup: order_response.tip_amount
+  :discount_applied => credit_to_apply,
+  :gift_card_credit_available => discount_response.gift_card_amount,
+  :spend_amount_returned_from_levelup => order_response.spend_amount,
+  :tip_returned_from_levelup => order_response.tip_amount
 )
 
 # Get relevant amounts to apply to check and apply as necessary
@@ -202,8 +204,8 @@ info about the error. It can be handled like so:
 
 ```ruby
 error = api.access_tokens.create_for_app(
-  api_key: 'bogus_api_key',
-  client_secret: 'bogus_client_secret'
+  :api_key => 'bogus_api_key',
+  :client_secret => 'bogus_client_secret'
 )
 
 puts error.success? # => false
