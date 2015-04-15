@@ -10,7 +10,7 @@ module Levelup
       end
 
       def list(user_access_token)
-        Requests::ListAddresses(user_access_token: user_access_token).
+        Requests::ListAddresses(:user_access_token => user_access_token).
           send_to_api(:get, endpoint_path)
       end
 

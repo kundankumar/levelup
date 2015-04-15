@@ -11,11 +11,11 @@ module Levelup
 
       def response_from_hash(hash)
         if hash.nil? # no locations found for this merchant
-          Responses::Success.new(locations: [])
+          Responses::Success.new(:locations => [])
         else
           locations =
             hash.map { |location| OpenStruct.new(location['location']) }
-          Responses::Success.new(locations: locations)
+          Responses::Success.new(:locations => locations)
         end
       end
     end

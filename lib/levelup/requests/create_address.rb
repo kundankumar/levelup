@@ -7,7 +7,7 @@ module Levelup
       include Templates::UserAuthenticated
 
       def body
-        { user_address: to_hash }
+        { :user_address => to_hash }
       end
 
       def response_from_hash(hash)

@@ -16,8 +16,8 @@ module Levelup
     private
 
     VERSIONS = {
-      v14: 'v14',
-      v15: 'v15'
+      :v14 => 'v14',
+      :v15 => 'v15'
     }
   end
 end

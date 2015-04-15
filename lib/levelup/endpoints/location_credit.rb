@@ -7,7 +7,7 @@ module Levelup
       end
 
       def get(user_access_token)
-        Requests::GetLocationCredit.new(user_access_token: user_access_token).
+        Requests::GetLocationCredit.new(:user_access_token => user_access_token).
           send_to_api :get, endpoint_path
       end
 

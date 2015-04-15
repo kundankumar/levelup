@@ -9,7 +9,7 @@ module Levelup
       # Refunds the order specified by this endpoint.
       # @param merchant_access_token [string] An access token for a user that manages this location.
       def refund(merchant_access_token)
-        Requests::RefundOrder.new(merchant_access_token: merchant_access_token).
+        Requests::RefundOrder.new(:merchant_access_token => merchant_access_token).
           send_to_api(:post, endpoint_path + '/refund')
       end
 

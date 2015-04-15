@@ -11,7 +11,7 @@ module Levelup
       #
       # @param merchant_access_token [string] An access token for a user that manages this location.
       def list(merchant_access_token)
-        Requests::ListLocations.new(merchant_access_token: merchant_access_token).
+        Requests::ListLocations.new(:merchant_access_token => merchant_access_token).
           send_to_api(:get, endpoint_path(:v14))
       end
 

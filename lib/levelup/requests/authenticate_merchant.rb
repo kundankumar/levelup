@@ -14,7 +14,7 @@ module Levelup
       end
 
       def body
-        { access_token: to_hash }
+        { :access_token => to_hash }
       end
 
       def response_from_hash(hash)

@@ -8,7 +8,7 @@ module Levelup
       attr_accessor :user
 
       def body
-        { api_key: api_key, user: user, permission_keynames: permission_keynames }
+        { :api_key => api_key, :user => user, :permission_keynames => permission_keynames }
       end
 
       def response_from_hash(hash)

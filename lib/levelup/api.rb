@@ -23,8 +23,8 @@ module Levelup
     # Generates an interface for the +access_tokens+ endpoint.
     def access_tokens
       Endpoints::AccessTokens.new(
-        api_key: api_key,
-        secret: secret
+        :api_key => api_key,
+        :secret => secret
       )
     end
 

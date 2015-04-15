@@ -19,13 +19,13 @@ module Levelup
             next
           end
 
-          { item: item }
+          { :item => item }
         end
 
         order_hash = to_hash
         order_hash[:items] = items
 
-        { order: order_hash }
+        { :order => order_hash }
       end
 
       def response_from_hash(hash)

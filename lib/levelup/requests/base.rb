@@ -1,3 +1,5 @@
+require 'json'
+
 module Levelup
   module Requests
     # The class containing the base functionality of all requests.
@@ -62,7 +64,7 @@ module Levelup
         end
 
         response = HTTParty.public_send(method, endpoint,
-          body: JSON.generate(body), headers: headers)
+          :body => JSON.generate(body), :headers => headers)
 
         if response.success?
           yield response

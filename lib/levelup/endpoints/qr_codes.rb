@@ -10,7 +10,7 @@ module Levelup
 
       # Retrieves the specified user's QR code using parameters specified in the endpoint.
       def get(user_access_token)
-        Requests::GetQrCode.new(user_access_token: user_access_token).
+        Requests::GetQrCode.new(:user_access_token => user_access_token).
           send_to_api(:get, endpoint_path)
       end
 

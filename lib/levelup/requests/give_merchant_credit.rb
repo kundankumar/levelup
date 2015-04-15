@@ -7,7 +7,7 @@ module Levelup
       attr_accessor :email, :value_amount
 
       def body
-        { merchant_funded_credit: to_hash }
+        { :merchant_funded_credit => to_hash }
       end
 
       def response_from_hash(hash)

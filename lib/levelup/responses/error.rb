@@ -21,7 +21,7 @@ module Levelup
             OpenStruct.new(error['error'])
           end
         else
-          @errors = [OpenStruct.new(message: 'The API returned an unexpected '\
+          @errors = [OpenStruct.new(:message => 'The API returned an unexpected '\
             'response. This is likely due to an incorrectly defined base URL.')]
         end
 

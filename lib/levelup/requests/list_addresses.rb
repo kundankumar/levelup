@@ -12,7 +12,7 @@ module Levelup
 
       def response_from_hash(hash)
         addresses = hash.map { |address| address['user_address'] }
-        Responses::Success.new(addresses: addresses)
+        Responses::Success.new(:addresses => addresses)
       end
     end
   end

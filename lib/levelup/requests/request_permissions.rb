@@ -12,7 +12,7 @@ module Levelup
       attr_accessor :permission_keynames
 
       def body
-        { permissions_request: to_hash }
+        { :permissions_request => to_hash }
       end
 
       def response_from_hash(hash)

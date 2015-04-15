@@ -10,7 +10,7 @@ module Levelup
       # Provides merchant-facing details about a specific order. For more
       # information about the parameters, @see Requests::CreateOrderDetails.
       def details(uuid, merchant_access_token)
-        Requests::CreateOrderDetails.new(merchant_access_token: merchant_access_token).
+        Requests::CreateOrderDetails.new(:merchant_access_token => merchant_access_token).
           send_to_api(:get, endpoint_path(:v14) + "/#{uuid}")
       end
 

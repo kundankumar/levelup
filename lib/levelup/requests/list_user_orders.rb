@@ -12,7 +12,7 @@ module Levelup
 
       def response_from_hash(hash)
         orders = hash.map { |order| OpenStruct.new(order['order']) }
-        Responses::Success.new(orders: orders)
+        Responses::Success.new(:orders => orders)
       end
     end
   end

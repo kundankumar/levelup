@@ -39,3 +39,12 @@ module Levelup
     end
   end
 end
+
+class Object
+  def public_send(name, *args)
+    unless public_methods.include?(name.to_s)
+      raise NoMethodError.new("undefined method `#{name}' for \"#{self.inspect}\":#{self.class}")
+    end
+    send(name, *args)
+  end
+end

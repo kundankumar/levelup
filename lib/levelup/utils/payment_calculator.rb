@@ -8,12 +8,12 @@ module Levelup
       # @param spend_amount_returned_from_levelup [Integer] The amount of spend returned from the
       #   LevelUp API.
       # @param tip_returned_from_levelup [Integer] The tip returned from the LevelUp API.
-      def initialize(discount_applied:, gift_card_credit_available:,
-          spend_amount_returned_from_levelup:, tip_returned_from_levelup:)
-        @discount_applied = discount_applied
-        @gift_card_credit_available = gift_card_credit_available
-        @spend_amount_returned_from_levelup = spend_amount_returned_from_levelup
-        @tip_returned_from_levelup = tip_returned_from_levelup
+      def initialize(options = {})
+        # discount_applied:, gift_card_credit_available:, spend_amount_returned_from_levelup:, tip_returned_from_levelup:
+        @discount_applied = options.fetch(:discount_applied)
+        @gift_card_credit_available = options.fetch(:gift_card_credit_available)
+        @spend_amount_returned_from_levelup = options.fetch(:spend_amount_returned_from_levelup)
+        @tip_returned_from_levelup = options.fetch(:tip_returned_from_levelup)
       end
 
       # Calculates the LevelUp discount to apply based on the arguments passed
@@ -24,12 +24,12 @@ module Levelup
       # @param payment_amount_requested [Integer] Spend amount requested from LevelUp API order
       #   endpoint in cents
       # @param tax_amount_due [Integer] Total amount of tax due on the check
-      def self.levelup_discount_to_apply(check_total_due_including_tax:, exempted_item_total:,
-          merchant_funded_credit_available:, payment_amount_requested:, tax_amount_due:)
-        total_due_without_tax = check_total_due_including_tax - tax_amount_due
-        max_discount = [payment_amount_requested, total_due_without_tax].min
-        max_discount_less_exemptions = [0,  max_discount - exempted_item_total].max
-        [merchant_funded_credit_available, max_discount_less_exemptions].min
+      def self.levelup_discount_to_apply(options ={})
+        # check_total_due_including_tax:, exempted_item_total:,merchant_funded_credit_available:, payment_amount_requested:, tax_amount_due:
+        total_due_without_tax = options.fetch(:check_total_due_including_tax) - options.fetch(:tax_amount_due)
+        max_discount = [options.fetch(:payment_amount_requested), total_due_without_tax].min
+        max_discount_less_exemptions = [0,  max_discount - options.fetch(:exempted_item_total)].max
+        [options.fetch(:merchant_funded_credit_available), max_discount_less_exemptions].min
       end
 
       # Cent amount of LevelUp gift card payment to apply NOT including tip

@@ -9,7 +9,7 @@ module Levelup
         :encrypted_expiration_year, :encrypted_number, :postal_code
 
       def body
-        { credit_card: to_hash }
+        { :credit_card => to_hash }
       end
 
       def response_from_hash(hash)

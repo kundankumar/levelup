@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Levelup
   module Responses
     # Class that encapsulates a successful response from the LevelUp API.

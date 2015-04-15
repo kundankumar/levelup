@@ -15,7 +15,7 @@ module Levelup
       # Generates a new app access token. If passed no parameters, attempts to
       # pass the preconfigured API key and client secret to the endpoint.
       def create_for_app(app_auth_request = nil)
-        build_request(app_auth_request || { api_key: @api_key, client_secret: @secret },
+        build_request(app_auth_request || { :api_key => @api_key, :client_secret => @secret },
             Requests::AuthenticateApp).
           send_to_api(:post, endpoint_path)
       end

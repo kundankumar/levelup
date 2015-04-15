@@ -10,7 +10,7 @@ module Levelup
       attr_accessor :manager_confirmation
 
       def body
-        { refund: to_hash }
+        { :refund => to_hash }
       end
 
       def response_from_hash(hash)

@@ -8,11 +8,11 @@ module Levelup
 
       def response_from_hash(hash)
         if hash.nil? # no locations found for this app
-          Responses::SuccessPaginated.new(locations: [])
+          Responses::SuccessPaginated.new(:locations => [])
         else
           locations =
             hash.map { |location| OpenStruct.new(location['location']) }
-          Responses::SuccessPaginated.new(locations: locations)
+          Responses::SuccessPaginated.new(:locations => locations)
         end
       end
 
