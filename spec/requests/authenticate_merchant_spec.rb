@@ -8,7 +8,7 @@ describe 'Levelup::Requests::AuthenticateMerchant' do
 
   describe '#auth_type' do
     it 'returns :none' do
-      expect(@test_merchant_authenticate_request.auth_type).to be :none
+      (@test_merchant_authenticate_request.auth_type).should == :none
     end
   end
 end

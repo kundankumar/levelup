@@ -11,17 +11,17 @@ class TestConfig < Settingslogic
   source 'spec/fixtures/keys.yml'
 end
 
-VCR.configure do |config|
-  config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
-  config.hook_into :webmock
-  config.default_cassette_options = {
-    record: :new_episodes,
-    match_requests_on: [:method, :uri, :body]
-  }
-  config.configure_rspec_metadata!
-end
+# VCR.configure do |config|
+#   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+#   config.hook_into :webmock
+#   config.default_cassette_options = {
+#     :record => :new_episodes,
+#     :match_requests_on => [:method, :uri, :body]
+#   }
+#   config.configure_rspec_metadata!
+# end
 
-RSpec.configure do |config|
+Spec::Runner.configure do |config|
   config.before do
     @test_client = Levelup::Api.new
   end

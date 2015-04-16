@@ -7,7 +7,7 @@ describe 'Levelup::Responses::Success' do
 
   describe '#success?' do
     it 'returns true' do
-      expect(@test_response.success?).to be_true
+      (@test_response.success?).should be_true
     end
   end
 end

@@ -7,7 +7,7 @@ describe 'Levelup::Requests::GetOrder' do
 
   describe '#auth_type' do
     it 'returns :merchant_v14' do
-      expect(@test_order_deets_request.auth_type).to eq(:merchant_v14)
+      (@test_order_deets_request.auth_type).should == :merchant_v14
     end
   end
 end

@@ -7,7 +7,7 @@ describe 'Levelup::Requests::ListOrders' do
 
   describe '#auth_type' do
     it 'returns :merchant_v14' do
-      @test_list_orders_request.auth_type.should eq(:merchant_v14)
+      (@test_list_orders_request.auth_type).should == :merchant_v14
     end
   end
 end

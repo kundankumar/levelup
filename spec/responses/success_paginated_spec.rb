@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Levelup::Responses::SuccessPaginated', vcr: true do
+describe 'Levelup::Responses::SuccessPaginated', :vcr => true do
   before do
     example_paginated_url = "#{Levelup::Configuration.api_url(:v14)}/apps/"\
       "#{TestConfig.app_id}/locations"
@@ -14,20 +14,20 @@ describe 'Levelup::Responses::SuccessPaginated', vcr: true do
 
   describe '#success?' do
     it 'returns true' do
-      expect(@has_next_response).to be_success
+      (@has_next_response).should be_success
     end
   end
 
   describe '#next_page?' do
     context 'with no next page' do
       it 'returns false' do
-        expect(@no_next_response.next_page?).to be_false
+        (@no_next_response.next_page?).should be_false
       end
     end
 
     context 'with another page to retrieve' do
       it 'returns true' do
-        expect(@has_next_response.next_page?).to be_true
+        (@has_next_response.next_page?).should be_true
       end
     end
   end
@@ -35,7 +35,7 @@ describe 'Levelup::Responses::SuccessPaginated', vcr: true do
   describe '#next' do
     context 'with no next page' do
       it 'raises an InvalidRequest error' do
-        expect { @no_next_response.next }.to raise_error(Levelup::Errors::InvalidRequest)
+         (@no_next_response.next).should raise_error(Levelup::Errors::InvalidRequest)
       end
     end
 
@@ -43,7 +43,7 @@ describe 'Levelup::Responses::SuccessPaginated', vcr: true do
       it 'successfully returns the next page' do
         next_page_response = @has_next_response.next
 
-        expect(next_page_response).to be_success
+        (next_page_response).should be_success
       end
     end
   end

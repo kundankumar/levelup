@@ -29,17 +29,17 @@ describe 'Levelup::Responses::Error' do
   describe '#errors' do
     context 'for an object with no body hash' do
       it 'has no errors' do
-        expect(@empty_response.errors).to eq([])
+        (@empty_response.errors).should == ([])
       end
     end
 
     context 'for an object with two full errors in its body hash' do
       it 'has two full errors' do
-        expect(@nonempty_response).to have(2).errors
+        (@nonempty_response).should have(2).errors
         @nonempty_response.errors.each do |error|
-          expect(error.property).to_not be_nil
-          expect(error.object).to_not be_nil
-          expect(error.message).to_not be_nil
+          (error.property).should_not be_nil
+          (error.object).should_not be_nil
+          (error.message).should_not be_nil
         end
       end
     end
@@ -48,20 +48,20 @@ describe 'Levelup::Responses::Error' do
   describe '#headers' do
     context 'for an object with an empty supplied header' do
       it 'has empty headers' do
-        expect(@empty_response.headers).to eq({})
+        (@empty_response.headers).should == ({})
       end
     end
 
     context 'for an object with a nonempty supplied header' do
       it 'has non-empty headers' do
-        expect(@nonempty_response.headers).to_not be_empty
+        (@nonempty_response.headers).should_not be_empty
       end
     end
   end
 
   describe '#success?' do
     it 'returns false' do
-      expect(@empty_response.success?).to be_false
+      (@empty_response.success?).should be_false
     end
   end
 end

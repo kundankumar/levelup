@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Levelup::Endpoints::PermissionsRequests', vcr: true do
+describe 'Levelup::Endpoints::PermissionsRequests', :vcr => true do
   before do
     @test_client.api_key = TestConfig.api_key_valid
     @test_client.secret = TestConfig.secret_valid
@@ -11,12 +11,12 @@ describe 'Levelup::Endpoints::PermissionsRequests', vcr: true do
   describe '#create' do
     it 'submits a permissions request' do
       response = @test_client.apps.permissions_requests.create(
-        email: TestConfig.user_email,
-        permission_keynames: ['create_orders']
+        :email => TestConfig.user_email,
+        :permission_keynames => ['create_orders']
       )
 
-      expect(response).to be_success
-      expect(response.state).to eq('pending')
+      (response).should be_success
+      (response.state).should == ('pending')
     end
   end
 end

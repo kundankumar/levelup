@@ -7,7 +7,7 @@ describe 'Levelup::Requests::AuthenticateApp' do
 
   describe '#auth_type' do
     it 'returns :none' do
-      expect(@test_authenticate_request.auth_type).to eq(:none)
+      (@test_authenticate_request.auth_type).should == :none
     end
   end
 end

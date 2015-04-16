@@ -8,13 +8,13 @@ describe 'Levelup::Requests::RequestPermissions' do
 
   describe '#auth_type' do
     it 'returns :app' do
-      expect(@test_user_permissions_request.auth_type).to be :app
+      (@test_user_permissions_request.auth_type).should == :app
     end
   end
 
   describe '#body' do
     it 'returns a hash wrapped in a permissions_request tag' do
-      expect(@test_user_permissions_request.body[:permissions_request]).to eq({})
+      (@test_user_permissions_request.body[:permissions_request]).should == {}
     end
   end
 end
