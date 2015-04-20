@@ -8,6 +8,14 @@ module Levelup
       def success?
         true
       end
+
     end
   end
 end
+
+# For accessing Openstruct object custom attribute 'id', dynamically defining 'id' method in class otherwise it will show
+# "Object#id will be deprecated; use Object#object_id" warning
+class OpenStruct
+  define_method(:id) {@table[:id]}
+end
+
