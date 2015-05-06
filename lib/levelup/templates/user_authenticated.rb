@@ -4,7 +4,7 @@ module Levelup
     #
     # Authentication template - only apply one authentication template per
     # request.
-    module Templates::UserAuthenticated
+    module UserAuthenticated
       # An access token for a user that has granted you appropriate
       # permissions.
       attr_accessor :user_access_token

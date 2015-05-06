@@ -4,9 +4,10 @@ module Levelup
     class UserAddresses < Base
       # Creates a specified user address. For more information on parameters, see
       # UserAddressRequest.
-      def create(user_address_request)
-        build_request(user_address_request, Requests::CreateAddress).
-          send_to_api(:post, endpoint_path)
+      def create(user_address_request, user_access_token)
+        request = build_request(user_address_request, Requests::CreateAddress)
+        request.user_access_token ||= user_access_token
+        request.send_to_api(:post, endpoint_path)
       end
 
       def list(user_access_token)
