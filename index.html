@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Levelup by kundankumar</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Levelup</h1>
+        <p>Official Levelup gem modified to support Ruby 1.8.7 </p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/kundankumar/levelup" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/kundankumar/levelup/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/kundankumar/levelup/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a id="levelup-ruby-sdk" class="anchor" href="#levelup-ruby-sdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>LevelUp Ruby SDK</h1>
+
+<p>Early alpha version of the LevelUp Ruby SDK - designed for e-commerce and online
+food ordering sites to provide the option to easily pay with a LevelUp account.</p>
+
+<p>Subject to drastic change without warning for duration of alpha period.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'levelup'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install levelup
+</code></pre>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p><a href="http://rubydoc.org/gems/levelup/frames"><img src="http://img.shields.io/badge/docs-rdoc.info-blue.svg" alt="Documentation"></a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="do-once-per-levelup-powered-application" class="anchor" href="#do-once-per-levelup-powered-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Do once per LevelUp-powered application:</h3>
+
+<ul>
+<li> Create an instance of the LevelUp client and authenticate it.</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>api <span class="pl-k">=</span> <span class="pl-c1">Levelup</span>::<span class="pl-c1">Api</span>.<span class="pl-k">new</span>
+
+<span class="pl-c"># While testing:</span>
+<span class="pl-c1">Levelup</span>::<span class="pl-c1">Configuration</span>.base_api_url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>https://sandbox.thelevelup.com/<span class="pl-pds">'</span></span>
+
+<span class="pl-c"># For production, these should be ENV variables:</span>
+api_key <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>23eef8c2895ce66eb4500bb5e324b200f5339e6fe6d8665f6de0205f43f3b563<span class="pl-pds">'</span></span>
+client_secret <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>4d71e958b9fb6a62af624390c4ef394df15d168ea12b3b12735643ff0694520f<span class="pl-pds">'</span></span>
+
+auth_response <span class="pl-k">=</span> api.access_tokens.create_for_app(
+  <span class="pl-c1">:api_key</span> =&gt; api_key,
+  <span class="pl-c1">:client_secret</span> =&gt; client_secret)
+
+api.app_access_token <span class="pl-k">=</span> auth_response.token</pre></div>
+
+<h3>
+<a id="do-once-per-merchant-account" class="anchor" href="#do-once-per-merchant-account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Do once per merchant account</h3>
+
+<ul>
+<li>Authenticate merchants using LevelUp email and password</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>sandboxdevexample@thelevelup.com<span class="pl-pds">'</span></span>
+password <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>fod2yau4flu6vok6<span class="pl-pds">'</span></span>
+
+merchant_token <span class="pl-k">=</span> api.access_tokens.create_for_merchant(
+  <span class="pl-c1">:api_key</span> =&gt; api_key, <span class="pl-c1">:username</span> =&gt; username, <span class="pl-c1">:password</span> =&gt; password)</pre></div>
+
+<h3>
+<a id="do-for-each-merchant-location" class="anchor" href="#do-for-each-merchant-location" aria-hidden="true"><span class="octicon octicon-link"></span></a>Do for each merchant location</h3>
+
+<ul>
+<li>Prompt merchant to map LevelUp locations to each of their online ordering locations</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>merchant_id <span class="pl-k">=</span> merchant_token.merchant_id
+merchant_access_token <span class="pl-k">=</span> merchant_token.token
+locations_response <span class="pl-k">=</span> api.merchants(merchant_id).locations.list(merchant_access_token)
+
+<span class="pl-c"># For testing purposes, we'll use the first location</span>
+
+location <span class="pl-k">=</span> locations_response.locations[<span class="pl-c1">0</span>]
+location_id <span class="pl-k">=</span> location.id</pre></div>
+
+<h3>
+<a id="do-for-each-customer" class="anchor" href="#do-for-each-customer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Do for each customer</h3>
+
+<ul>
+<li>Ask a user for permission to make an order for them (alternatively you can use our
+<a href="http://developer.thelevelup.com/resources-and-guides/web-authentication-flow/">OpenID</a> or
+<a href="http://developer.thelevelup.com/resources-and-guides/web-authorization-flow/">Oauth2</a> flows). 
+For more information on available permissions, see the
+<a href="http://developer.thelevelup.com/resources-and-guides/permissions-list/">LevelUp permissions list</a>
+</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>api.apps.permissions_requests.create(
+  <span class="pl-c1">:email</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>user@email.com<span class="pl-pds">'</span></span>,
+  <span class="pl-c1">:permission_keynames</span> =&gt; [<span class="pl-s"><span class="pl-pds">'</span>create_orders<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>read_qr_code<span class="pl-pds">'</span></span>])
+<span class="pl-c"># wait for the user to approve the request. you will receive a user</span>
+<span class="pl-c"># access token in the same manner as above.</span></pre></div>
+
+<ul>
+<li>Retrieve a user's QR code</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>qr_code_response <span class="pl-k">=</span> api.qr_codes.get(customer_token)
+
+qr_code <span class="pl-k">=</span> qr_code_response.code</pre></div>
+
+<ul>
+<li>Create an order for the specified merchant.</li>
+</ul>
+
+<div class="highlight highlight-ruby"><pre>
+<span class="pl-c"># Check for merchant_funded_credit</span>
+
+discount_response <span class="pl-k">=</span> api.locations(location_id).merchant_funded_credit.get(
+  qr_code, merchant_access_token)
+
+<span class="pl-c"># Define the details from the check</span>
+
+check_total_due_including_tax <span class="pl-k">=</span> <span class="pl-c1">110</span> <span class="pl-c"># Total amount of payment due on the check (in cents)</span>
+exempted_item_total <span class="pl-k">=</span> <span class="pl-c1">0</span> <span class="pl-c"># Total amount of exempted (milk, cigarettes etc) items (in cents)</span>
+spend_amount_requested <span class="pl-k">=</span> <span class="pl-c1">110</span> <span class="pl-c"># Total amount of payment requested from LevelUp (in cents)</span>
+tax_amount_due <span class="pl-k">=</span> <span class="pl-c1">10</span> <span class="pl-c"># Total tax amount due on check (in cents)</span>
+identifier_from_merchant <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>01234<span class="pl-pds">'</span></span> <span class="pl-c"># Unique check identifier in your platform (ie, check ID)</span>
+check_items_array <span class="pl-k">=</span> [ <span class="pl-c"># Array of all items on the check</span>
+    {
+      <span class="pl-c1">:charged_price</span> =&gt; <span class="pl-c1">350</span>,
+      <span class="pl-c1">:description</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>Non-poisonous, supplies vital nutrients<span class="pl-pds">'</span></span>,
+      <span class="pl-c1">:name</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>Food<span class="pl-pds">'</span></span>,
+      <span class="pl-c1">:quantity</span> =&gt; <span class="pl-c1">1</span>,
+      <span class="pl-c1">:sku</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>123abc<span class="pl-pds">'</span></span>,
+      <span class="pl-c1">:category</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>Edible Things<span class="pl-pds">'</span></span>,
+      <span class="pl-c1">:standard_price</span> =&gt; <span class="pl-c1">350</span>
+    }
+    <span class="pl-c"># more items can go here</span>
+  ]
+
+<span class="pl-c"># Determine the amount of discount to apply to the check</span>
+
+credit_to_apply <span class="pl-k">=</span> <span class="pl-c1">Levelup</span>::<span class="pl-c1">Utils</span>::<span class="pl-c1">PaymentCalculator</span>.levelup_discount_to_apply(
+  <span class="pl-c1">:check_total_due_including_tax</span> =&gt; check_total_due_including_tax,
+  <span class="pl-c1">:exempted_item_total</span> =&gt; exempted_item_total,
+  <span class="pl-c1">:merchant_funded_credit_available</span> =&gt; discount_response.discount_amount,
+  <span class="pl-c1">:payment_amount_requested</span> =&gt; spend_amount_requested,
+  <span class="pl-c1">:tax_amount_due</span> =&gt; tax_amount_due
+)
+
+<span class="pl-c"># Apply the discount to the check</span>
+
+<span class="pl-c"># Create a new order request</span>
+order_response <span class="pl-k">=</span> api.orders.create(
+  <span class="pl-c1">:identifier_from_merchant</span> =&gt; identifier_from_merchant,
+  <span class="pl-c1">:location_id</span> =&gt; location_id,
+  <span class="pl-c1">:spend_amount</span> =&gt; spend_amount_requested,
+  <span class="pl-c1">:items</span> =&gt; check_items_array,
+  <span class="pl-c1">:merchant_access_token</span> =&gt; merchant_access_token,
+  <span class="pl-c1">:user_access_token</span> =&gt; qr_code)
+
+calculator <span class="pl-k">=</span> <span class="pl-c1">Levelup</span>::<span class="pl-c1">Utils</span>::<span class="pl-c1">PaymentCalculator</span>.<span class="pl-k">new</span>(
+  <span class="pl-c1">:discount_applied</span> =&gt; credit_to_apply,
+  <span class="pl-c1">:gift_card_credit_available</span> =&gt; discount_response.gift_card_amount,
+  <span class="pl-c1">:spend_amount_returned_from_levelup</span> =&gt; order_response.spend_amount,
+  <span class="pl-c1">:tip_returned_from_levelup</span> =&gt; order_response.tip_amount
+)
+
+<span class="pl-c"># Get relevant amounts to apply to check and apply as necessary</span>
+
+calculator.gift_card_payment_to_apply
+calculator.gift_card_tip_to_apply
+calculator.levelup_payment_to_apply
+calculator.levelup_tip_to_apply
+
+<span class="pl-c"># Additional values are also available (if desired)</span>
+
+calculator.total_gift_card_payment_to_apply_including_tip
+calculator.gift_card_remaining_balance_after_payment
+calculator.total_levelup_payment_to_apply_including_tip
+
+<span class="pl-c"># Apply each payment to the check and close the check (assuming balance due is 0)</span></pre></div>
+
+<p>The LevelUp Ruby SDK mirrors the API as closely as possible, so the call for any given endpoint
+can be inferred from its URL.</p>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-ruby"><pre>api.apps.permissions_requests.create <span class="pl-c"># points to /v15/apps/permissions_requests/ POST</span>
+api.user_addresses.list              <span class="pl-c"># points to /v15/user_addresses/ GET</span>
+api.orders(uuid).refund              <span class="pl-c"># points to /v15/orders/:uuid/refund/ POST</span></pre></div>
+
+<h2>
+<a id="pagination" class="anchor" href="#pagination" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pagination</h2>
+
+<p>Some requests that return large lists are paginated and only return a small number of values per
+request. The LevelUp Ruby SDK handles this by allowing you to request the next page from the
+paginated response.</p>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-ruby"><pre>locs_response <span class="pl-k">=</span> api.apps(<span class="pl-c1">123</span>).locations.list <span class="pl-c"># gets a page of locations associated with an app</span>
+locs_response.locations <span class="pl-c"># =&gt; [location 1, location 2...location 10]</span>
+
+locs_response.next_page? <span class="pl-c"># =&gt; true if there is another page of results to load</span>
+
+next_page_response <span class="pl-k">=</span> locs_response.next <span class="pl-c"># gets the next page of results</span></pre></div>
+
+<h2>
+<a id="errors" class="anchor" href="#errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Errors</h2>
+
+<p>If the LevelUp API returns a 422 error response, it will also return an object containing useful
+info about the error. It can be handled like so:</p>
+
+<div class="highlight highlight-ruby"><pre>error <span class="pl-k">=</span> api.access_tokens.create_for_app(
+  <span class="pl-c1">:api_key</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>bogus_api_key<span class="pl-pds">'</span></span>,
+  <span class="pl-c1">:client_secret</span> =&gt; <span class="pl-s"><span class="pl-pds">'</span>bogus_client_secret<span class="pl-pds">'</span></span>
+)
+
+puts error.success? <span class="pl-c"># =&gt; false</span>
+puts error.headers[<span class="pl-s"><span class="pl-pds">'</span>Cache-Control<span class="pl-pds">'</span></span>] <span class="pl-c"># =&gt; 'private' (Map of header names to values)</span>
+puts error.status_code <span class="pl-c"># =&gt; 422</span>
+puts error.errors[<span class="pl-c1">0</span>] <span class="pl-c"># =&gt; object with message, object, property values</span>
+puts error.errors[<span class="pl-c1">0</span>].message <span class="pl-c"># =&gt; 'API Key is invalid.'</span>
+puts error.errors[<span class="pl-c1">0</span>].property <span class="pl-c"># =&gt; 'api_key'</span></pre></div>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ul>
+<li> Fork it (<a href="https://github.com/kundankumar/levelup/fork">https://github.com/kundankumar/levelup/fork</a>)</li>
+<li> Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li> Ensure that Rubocop gives you a clean bill of health</li>
+</ul>
+
+<pre><code>cd path/to/my/ruby-sdk-folder
+bundle exec rubocop
+</code></pre>
+
+<ul>
+<li> Ensure that all RSpec tests pass (and write some for your code!)</li>
+</ul>
+
+<pre><code>cd path/to/my/ruby-sdk-folder
+bundle exec rspec
+</code></pre>
+
+<ul>
+<li> Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li> Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li> Create a new Pull Request</li>
+</ul>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/kundankumar">kundankumar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
