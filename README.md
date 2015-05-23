@@ -218,7 +218,7 @@ puts error.errors[0].property # => 'api_key'
 
 ## Contributing
 
--  Fork it (https://github.com/TheLevelup/levelup-sdk-ruby/fork)
+-  Fork it (https://github.com/kundankumar/levelup/fork)
 -  Create your feature branch (`git checkout -b my-new-feature`)
 -  Ensure that Rubocop gives you a clean bill of health
 ```
